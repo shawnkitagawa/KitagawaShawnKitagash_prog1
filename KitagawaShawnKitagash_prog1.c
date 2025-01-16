@@ -36,7 +36,7 @@ double bottom_surface_area (double pi, double b)
 
 double lateral_surface_area (double pi, double radius,double  height)
 {
-    return 2 * pi * radius * height;
+    return 2.0 * pi * radius * height;
 }
 
 double total_surface_area (double  top_surface_area,double  bottom_surface_area , double lateral_surface_area)
@@ -49,9 +49,11 @@ double volume (double pi, double radius, double height,double  a ,double b)
 {
     a = a * a;
     b = b * b;
+    double prev_height = height;
     height = height * height;
+    double total_volume = (1.0/6) * pi * prev_height * (3*a + 3*b + height );
 
-    return 1/6 * pi * height * (3*a + 3*b + height );
+    return total_volume;
 
 
 
@@ -63,6 +65,7 @@ int main ()
 {
     int number = 0;
     int start = 1;
+    double pi = 3.14159265359;
     while (number < 2 || number > 10)
     {
         printf("How many spherical segments you want to evaluate [2-10-]\n ");
@@ -74,6 +77,8 @@ int main ()
     double radius = 0;
     double height_a = 0;
     double height_b = 0;
+    double Total_surface_area_array[number-1];
+    double Volume_array[number-1];
     while (start <= number)
     {
         printf("Obtaining date for spherical segment number %d \n", start);
@@ -111,14 +116,54 @@ int main ()
         }
         else
         {
+            double a = solve_a(radius, height_a);
+            printf("a is %lf", a );
+            double b = solve_b(radius, height_b);
+            printf("b is %lf", b );
+            double height = solve_height(height_a, height_b);
+            printf("height is %lf", height );
+            double Top_surface_area = top_surface_area(pi, a);
+            printf("top surface area is %lf", Top_surface_area );
+            double Bottom_surface_area = bottom_surface_area(pi, b);
+            printf("Bottom surface area is %lf", Bottom_surface_area );
+            double Lateral_surface_area = lateral_surface_area(pi, radius, height);
+            printf("Lateral surface area is %lf", Lateral_surface_area );
+            double Total_surface_area = total_surface_area(Top_surface_area, Bottom_surface_area, Lateral_surface_area);
+            double Volume = volume(pi, radius, height, a ,b);
+
+            printf("Total Surface Area = %.2lf ", Total_surface_area);
+            printf("Volume = %.2lf", Volume);
+            Total_surface_area_array[start - 1] = Total_surface_area;
+            Volume_array[start - 1] = Volume;
             start +=1;
 
         }
 
 
-
+    }
+    printf("\n");
+    double total_sum_surface_area = 0;
+    for (int i = 0; i < number; i++)
+    {
+        printf("%.2lf \n", Total_surface_area_array[i]);
+        total_sum_surface_area += Total_surface_area_array[i];
 
     }
+    double average_surface_area = total_sum_surface_area/ number;
+    printf("the average surface area is %.2lf \n", average_surface_area);
+
+    double Volume_sum = 0;
+    for (int i = 0; i < number; i++)
+    {
+        printf("%.2lf \n", Volume_array[i]);
+        Volume_sum  += Volume_array[i];
+
+    }
+     double average_volume = Volume_sum / number;
+    printf("the average volume is %.2lf", average_volume);
+
+
+
 
     
 
