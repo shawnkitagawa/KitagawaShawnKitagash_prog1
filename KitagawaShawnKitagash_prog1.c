@@ -82,57 +82,57 @@ int main ()
     while (start <= number)
     {
         printf("Obtaining date for spherical segment number %d \n", start);
-        printf("What is the radius of the sphere (R)\n");
+        printf("What is the radius of the sphere (R)?\n");
         scanf("%lf", &radius);
-        printf("What is the height of the top area fo the spherical segment (ha)\n");
+        printf("What is the height of the top area fo the spherical segment (ha)?\n");
         scanf("%lf", &height_a);
-        printf("What is the height of the bottom area of the spherical segment (hb)\n");
+        printf("What is the height of the bottom area of the spherical segment (hb)?\n");
         scanf("%lf", &height_b);
-        printf("Entered data: R = %lf  ha = %lf  hb = %lf  \n", radius, height_a, height_b);
+        printf("Entered data: R = %.2lf  ha = %.2lf  hb = %.2lf  \n", radius, height_a, height_b);
 
         if (height_a < 0)
         {
-            printf("Invalid Input: height_a needs to be a positive integer\n");
+            printf("Invalid Input: ha = %.2lf. height_a needs to be a positive integer\n", height_a);
         }
         else if (height_b < 0)
         {
-            printf("Invalid Input: height_b needs to be a positive integer\n");
+            printf("Invalid Input: hb = %.2lf. height_b needs to be a positive integer\n", height_b);
         }
         else if (radius < 0)
         {
-            printf("Invalid Input: radius needs to be a positive integer\n");
+            printf("Invalid Input: radius = %.2lf. radius needs to be a positive integer\n", radius);
         }
         else if (radius < height_a)
         {
-            printf("Invalid Input: height_a cannot be beggier than the radius\n");
+            printf("Invalid Input: R = %.2lf ha = %.2lf. R must be greater than or equal to ha\n", radius, height_a);
         }
         else if (radius < height_b)
         {
-            printf("Invalid Input: height_b cannot be beggier than the radius\n");
+            printf("Invalid Input: hb = %.2lf radius = %.2lf. height_b cannot be beggier than the radius\n", height_b, radius);
         }
         else if (height_b > height_a)
         {
-            printf("Invalid Input: height_b cannot be beggier than height_a\n");
+            printf("Invalid Input: ha = %.2lf hb = %.2f. ha must be greater than or equal to hb\n",height_a, height_b);
         }
         else
         {
             double a = solve_a(radius, height_a);
-            printf("a is %lf", a );
+            // printf("a is %lf", a );
             double b = solve_b(radius, height_b);
-            printf("b is %lf", b );
+            // printf("b is %lf", b );
             double height = solve_height(height_a, height_b);
-            printf("height is %lf", height );
+            // printf("height is %lf", height );
             double Top_surface_area = top_surface_area(pi, a);
-            printf("top surface area is %lf", Top_surface_area );
+            // printf("top surface area is %lf", Top_surface_area );
             double Bottom_surface_area = bottom_surface_area(pi, b);
-            printf("Bottom surface area is %lf", Bottom_surface_area );
+            // printf("Bottom surface area is %lf", Bottom_surface_area );
             double Lateral_surface_area = lateral_surface_area(pi, radius, height);
-            printf("Lateral surface area is %lf", Lateral_surface_area );
+            // printf("Lateral surface area is %lf", Lateral_surface_area );
             double Total_surface_area = total_surface_area(Top_surface_area, Bottom_surface_area, Lateral_surface_area);
             double Volume = volume(pi, radius, height, a ,b);
 
             printf("Total Surface Area = %.2lf ", Total_surface_area);
-            printf("Volume = %.2lf", Volume);
+            printf("Volume = %.2lf \n", Volume);
             Total_surface_area_array[start - 1] = Total_surface_area;
             Volume_array[start - 1] = Volume;
             start +=1;
@@ -141,34 +141,26 @@ int main ()
 
 
     }
-    printf("\n");
+    printf("Total average results:\n");
     double total_sum_surface_area = 0;
     for (int i = 0; i < number; i++)
     {
-        printf("%.2lf \n", Total_surface_area_array[i]);
+        // printf("%.2lf \n", Total_surface_area_array[i]);
         total_sum_surface_area += Total_surface_area_array[i];
 
     }
     double average_surface_area = total_sum_surface_area/ number;
-    printf("the average surface area is %.2lf \n", average_surface_area);
+    printf("Average Surface Area = %.2lf ", average_surface_area);
 
     double Volume_sum = 0;
     for (int i = 0; i < number; i++)
     {
-        printf("%.2lf \n", Volume_array[i]);
+        // printf("%.2lf \n", Volume_array[i]);
         Volume_sum  += Volume_array[i];
 
     }
      double average_volume = Volume_sum / number;
-    printf("the average volume is %.2lf", average_volume);
-
-
-
-
-    
-
-
-
+    printf("Average Volume =  %.2lf", average_volume);
 
 
 }
